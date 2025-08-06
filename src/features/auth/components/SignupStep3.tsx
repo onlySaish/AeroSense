@@ -25,6 +25,30 @@ const SignupStep3: React.FC<SignupStep3Props> = ({ userData }) => {
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+      const maxSizeMB = 2;
+
+      if (!validTypes.includes(file.type)) {
+        dispatch(
+          showPopup({
+            message: "Only JPG, PNG, or WEBP image files are allowed.",
+            duration: 3000,
+            type: "error",
+          })
+        );
+        return;
+      }
+
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        dispatch(
+          showPopup({
+            message: `Image size should be less than ${maxSizeMB}MB.`,
+            duration: 3000,
+            type: "error",
+          })
+        );
+        return;
+      }
       setForm({ ...form, avatar: file });
       setAvatarPreview(URL.createObjectURL(file));
     }
@@ -32,6 +56,52 @@ const SignupStep3: React.FC<SignupStep3Props> = ({ userData }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!form.username.trim()) {
+      dispatch(
+        showPopup({
+          message: "Username is required.",
+          duration: 3000,
+          type: "error",
+        })
+      );
+      return;
+    }
+
+    if (form.username.length < 3) {
+      dispatch(
+        showPopup({
+          message: "Username must be at least 3 characters long.",
+          duration: 3000,
+          type: "error",
+        })
+      );
+      return;
+    }
+
+    if (!/^[a-zA-Z0-9_]+$/.test(form.username)) {
+      dispatch(
+        showPopup({
+          message: "Username can only contain letters, numbers, and underscores.",
+          duration: 3000,
+          type: "error",
+        })
+      );
+      return;
+    }
+
+    // Avatar validation
+    if (!form.avatar) {
+      dispatch(
+        showPopup({
+          message: "Please upload a profile image.",
+          duration: 3000,
+          type: "error",
+        })
+      );
+      return;
+    }
+
     const finalData = { ...userData, ...form };
     if (!finalData.email || !finalData.password) {
       dispatch(

@@ -62,6 +62,32 @@ const SignupStep1: React.FC<SignupStep1Props> = ({ nextStep }) => {
 
 	const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 	  e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    
+    if (!emailRegex.test(form.email)) {
+      dispatch(
+        showPopup({
+          message: 'Please enter a valid email address.',
+          duration: 3000,
+          type: 'error',
+        })
+      );
+      return;
+    }
+
+    if (!passwordRegex.test(form.password)) {
+      dispatch(
+        showPopup({
+          message: 'Password must be at least 8 characters long and include a number and special character.',
+          duration: 3000,
+          type: 'error',
+        })
+      );
+      return;
+    }
+
 	  if (!isPassSame) {
 	    dispatch(
 	      showPopup({

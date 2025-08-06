@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-// import Loader from '../features/Loader';
-// import PopupBar from '../features/PopupBar';
+import Loader from '../features/Loader';
+import PopupBar from '../features/PopupBar';
 import SignupStep1 from '../features/auth/components/SignupStep1';
 import SignupStep2 from '../features/auth/components/SignupStep2';
 import SignupStep3 from '../features/auth/components/SignupStep3';
@@ -17,8 +17,8 @@ function SignUpPage(): React.JSX.Element {
   return (
     <>
       <div className="min-h-screen w-full bg-center bg-cover bg-gray-900 flex flex-row justify-center items-center py-8">
-        {/* <PopupBar/>
-        <Loader/> */}
+        <PopupBar/>
+        <Loader/>
         {step === 1 && <SignupStep1 nextStep={nextStep} />}
         {step === 2 && <SignupStep2 nextStep={() => nextStep({})} userData={userData} />}
         {step === 3 && <SignupStep3 userData={userData} />}
