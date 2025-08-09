@@ -70,7 +70,7 @@ const Home = (): React.JSX.Element => {
                 className="block w-full px-4 py-3 bg-gray-800 text-white text-base rounded-lg shadow-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 {locationsData.map((loc, idx) => (
-                  <option key={idx} value={idx} className="text-black">
+                  <option key={idx} value={idx} className="text-white">
                     {loc.location}
                   </option>
                 ))}
